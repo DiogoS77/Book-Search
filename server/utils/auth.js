@@ -1,39 +1,41 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
+const {AuthenticationError} = require("apollo-server-express"); // Import relevant modules for Apollo Server
 
-// set token secret and expiration date
-const secret = 'mysecretsshhhhh';
-const expiration = '2h';
+// Set token secret and expiration date
+const secret = "mysecretsshhhhh";
+const expiration = "2h";
 
 module.exports = {
-  // function for our authenticated routes
-  authMiddleware: function (req, res, next) {
-    // allows token to be sent via  req.query or headers
-    let token = req.query.token || req.headers.authorization;
+  // Middleware function for authentication
+  authMiddleware: function (context) {
+    const req = context.req;
 
-    // ["Bearer", "<tokenvalue>"]
-    if (req.headers.authorization) {
-      token = token.split(' ').pop().trim();
+    // Check for the token in the request headers
+    const authHeader = req.headers.authorization;
+
+    if (authHeader) {
+      const token = authHeader.split("Bearer ")[1]; // Extract the token from the "Bearer" token format
+
+      if (token) {
+        try {
+          // Verify the token and decode user data
+          const {data} = jwt.verify(token, secret, {maxAge: expiration});
+          context.user = data; // Store the user data in the context for use in resolvers
+        } catch (error) {
+          throw new AuthenticationError("Invalid token"); // Handle token verification error
+        }
+      } else {
+        throw new AuthenticationError(
+          'Authentication token must be formatted as "Bearer <token>"'
+        );
+      }
+    } else {
+      throw new AuthenticationError("Authentication token must be provided");
     }
-
-    if (!token) {
-      return res.status(400).json({ message: 'You have no token!' });
-    }
-
-    // verify token and get user data out of it
-    try {
-      const { data } = jwt.verify(token, secret, { maxAge: expiration });
-      req.user = data;
-    } catch {
-      console.log('Invalid token');
-      return res.status(400).json({ message: 'invalid token!' });
-    }
-
-    // send to next endpoint
-    next();
   },
-  signToken: function ({ username, email, _id }) {
-    const payload = { username, email, _id };
+  signToken: function ({username, email, _id}) {
+    const payload = {username, email, _id};
 
-    return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
+    return jwt.sign({data: payload}, secret, {expiresIn: expiration});
   },
 };
