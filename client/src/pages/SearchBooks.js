@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {Container, Card, Button, Row, Col, Form} from "react-bootstrap";
 import {useQuery, useMutation} from "@apollo/client";
-import {SEARCH_GOOGLE_BOOKS} from "../utils/queries";
+import {searchGoogleBooks} from "../utils/API";
 import {SAVE_BOOK} from "../utils/mutations";
 import Auth from "../utils/auth";
 import {saveBookIds, getSavedBookIds} from "../utils/localStorage";
@@ -11,7 +11,6 @@ const SearchBooks = () => {
   const [searchInput, setSearchInput] = useState("");
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
 
-  const {loading, data} = useQuery(SEARCH_GOOGLE_BOOKS);
   const [saveBook] = useMutation(SAVE_BOOK);
 
   useEffect(() => {
