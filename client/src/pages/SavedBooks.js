@@ -15,6 +15,8 @@ const SavedBooks = () => {
     refetch();
   }, [refetch]);
 
+  useEffect(() => {}, [data]);
+
   const handleDeleteBook = async (bookId) => {
     const token = Auth.getToken();
 
