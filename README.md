@@ -76,7 +76,7 @@ To use this repository is pretty simple. You will have to clone the repo , and s
 
 ![End Result](./client/src/images/FinalProject.png)
 
-Deployed Application: https://diogos77.github.io/React-Portfolio
+Deployed Application: https://book-search-bootcamp-60e5e4f4d6ce.herokuapp.com/
 
 ## Tests
 
@@ -103,4 +103,4 @@ For any questions or inquiries, feel free to reach out to me:
 - GitHub: [DiogoS77](https://github.com/DiogoS77)
 - Email: diogo.messi.18@hotmail.com
 
-Deployed Application: https://diogos77.github.io/React-Portfolio
+Deployed Application: https://book-search-bootcamp-60e5e4f4d6ce.herokuapp.com/
