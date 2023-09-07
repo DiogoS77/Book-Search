@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {Container, Card, Button, Row, Col, Form} from "react-bootstrap";
-import {useQuery, useMutation} from "@apollo/client";
+import {useMutation} from "@apollo/client";
 import {searchGoogleBooks} from "../utils/API";
 import {SAVE_BOOK} from "../utils/mutations";
 import Auth from "../utils/auth";
@@ -60,10 +60,6 @@ const SearchBooks = () => {
       const response = await saveBook({
         variables: {bookData: bookToSave},
       });
-
-      if (!response.ok) {
-        throw new Error("Something went wrong!");
-      }
 
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
     } catch (err) {
