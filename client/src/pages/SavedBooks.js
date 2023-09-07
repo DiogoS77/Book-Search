@@ -25,7 +25,7 @@ const SavedBooks = () => {
     }
 
     try {
-      const {data} = await removeBook({variables: {id: bookId}});
+      const {data} = await removeBook({variables: {bookId}});
       const updatedUserData = data?.me || {};
 
       removeBookId(bookId);
