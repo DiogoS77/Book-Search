@@ -15,23 +15,22 @@ module.exports = {
 
     if (authHeader) {
       const token = authHeader.split("Bearer ")[1]; // Extract the token from the "Bearer" token format
-
+      console.log({token});
       if (token) {
         try {
           // Verify the token and decode user data
           const {data} = jwt.verify(token, secret, {maxAge: expiration});
           context.user = data; // Store the user data in the context for use in resolvers
         } catch (error) {
-          throw new AuthenticationError("Invalid token"); // Handle token verification error
+          context.user = undefined;
         }
       } else {
-        throw new AuthenticationError(
-          'Authentication token must be formatted as "Bearer <token>"'
-        );
+        context.user = undefined;
       }
     } else {
-      throw new AuthenticationError("Authentication token must be provided");
+      context.user = undefined;
     }
+    return context;
   },
   signToken: function ({username, email, _id}) {
     const payload = {username, email, _id};
