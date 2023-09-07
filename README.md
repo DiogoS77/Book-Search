@@ -74,7 +74,7 @@ npm i
 
 To use this repository is pretty simple. You will have to clone the repo , and soon as you clone it and open it, you will need to open your terminal and run the following command (npm i). After installing everything you will need to run this following command in your terminal run (npm run develop). After running this command you will see your localhost was made and you should be able to access your localhost and open the portfolio. Or you can use the github deployed application instead of the localhost.
 
-![End Result](./src/images/FinalProject.png)
+![End Result](./client/src/images/FinalProject.png)
 
 Deployed Application: https://diogos77.github.io/React-Portfolio
 
