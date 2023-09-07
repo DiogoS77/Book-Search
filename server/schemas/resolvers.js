@@ -41,21 +41,12 @@ const resolvers = {
       return {token, user};
     },
 
-    saveBook: async (parent, args, context) => {
+    saveBook: async (parent, {bookData}, context) => {
       if (context.user) {
-        const {authors, description, title, bookId, image, link} = args;
-        const book = await Book.create({
-          authors,
-          description,
-          title,
-          bookId,
-          image,
-          link,
-        });
-
+        // Find the user by ID and push the new book to their savedBooks array
         const updatedUser = await User.findOneAndUpdate(
           {_id: context.user._id},
-          {$addToSet: {savedBooks: book._id}},
+          {$push: {savedBooks: bookData}},
           {new: true, runValidators: true}
         );
 
